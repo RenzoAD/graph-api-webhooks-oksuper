@@ -22,7 +22,6 @@ var received_updates = [];
 
 app.get('/', function(req, res) {
   console.log(req);
-  console.log(token);
   res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
@@ -38,6 +37,7 @@ app.get(['/facebook', '/instagram'], function(req, res) {
 });
 
 app.post('/facebook', function(req, res) {
+  console.log("POST_FAACEBOOK_1");
   console.log('Facebook request body:', req.body);
 
   if (!req.isXHubValid()) {
@@ -45,11 +45,13 @@ app.post('/facebook', function(req, res) {
     res.sendStatus(401);
     return;
   }
+  console.log("POST_FAACEBOOK_2");
 
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
   received_updates.unshift(req.body);
   res.sendStatus(200);
+  console.log("POST_FAACEBOOK_3");
 });
 
 app.post('/instagram', function(req, res) {
